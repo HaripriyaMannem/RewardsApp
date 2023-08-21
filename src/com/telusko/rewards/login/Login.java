@@ -20,7 +20,8 @@ public class Login
         System.out.println("**********************************" + RESET);
     }
 
-    public void authentication(List<User> users) throws AuthException {
+    public void authentication(List<User> users) throws AuthException
+    {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter your Name:");
         String name = sc.nextLine().trim();
@@ -29,7 +30,7 @@ public class Login
         String pwd = sc.nextLine().trim();
         String excMsg = "";
 
-        //Validating users
+        //Validating user
         for (User user : users)
         {
             String decPwd = util.decryptPwd(user.getPassword());
@@ -40,19 +41,9 @@ public class Login
                 excMsg = "";
                 break;
             }
-            else if(!user.getName().equalsIgnoreCase(name) && decPwd.equals(pwd))
-            {
-                excMsg = "Invalid Username";
-                break;
-            }
-            else if(user.getName().equalsIgnoreCase(name) && !decPwd.equals(pwd))
-            {
-                excMsg = "Invalid Password";
-                break;
-            }
             else
             {
-                excMsg = "Both Username and Password is invalid";
+                excMsg = "Invalid credentials";
             }
         }
         if(!excMsg.isEmpty())
