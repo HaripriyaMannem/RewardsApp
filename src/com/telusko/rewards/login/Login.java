@@ -2,6 +2,7 @@ package com.telusko.rewards.login;
 
 import com.telusko.rewards.dto.User;
 import com.telusko.rewards.exception.AuthException;
+import com.telusko.rewards.service.RewardService;
 import com.telusko.rewards.util.Util;
 
 import java.util.List;
@@ -13,6 +14,8 @@ import static com.telusko.rewards.constants.Constants.RESET;
 public class Login
 {
     Util util = new Util();
+
+    RewardService rewardService = new RewardService();
     public Login()
     {
         System.out.println(CYAN + "**********************************");

@@ -2,9 +2,12 @@ import com.telusko.rewards.Thread.TransThread;
 import com.telusko.rewards.dto.User;
 import com.telusko.rewards.exception.AuthException;
 import com.telusko.rewards.login.Login;
+import com.telusko.rewards.service.RewardService;
 import com.telusko.rewards.service.UserService;
 
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import static com.telusko.rewards.constants.Constants.*;
 
@@ -17,15 +20,19 @@ public class Main
         List<User> users = userObj.createUsers();
 
         //Background Thread for Transactions
-        TransThread transThread = new TransThread(users);
+        BlockingQueue<List<User>> sharedQueue = new LinkedBlockingQueue<>();
+        TransThread transThread = new TransThread(users, sharedQueue);
         Thread thread = new Thread(transThread);
         thread.start();
 
-        //User Authentication
         Login login = new Login();
+        RewardService rewardService = new RewardService();
         try
         {
+            //User Authentication
             login.authentication(users);
+            //show rewards
+            rewardService.accessRewards(sharedQueue);
         }
         catch (AuthException e)
         {
@@ -33,7 +40,10 @@ public class Main
             //Allowing User for Second Time Login
             try
             {
+                //User Authentication
                 login.authentication(users);
+                //show rewards
+                rewardService.accessRewards(sharedQueue);
             }
             catch (AuthException ex)
             {

@@ -1,4 +1,5 @@
 package com.telusko.rewards.dto;
 
-public class GiftCard {
+public class GiftCard
+{
 }

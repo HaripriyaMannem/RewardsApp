@@ -12,6 +12,7 @@ public class User
     private int points;
     private int redeemPoints;
 
+
     public int getId() {
         return id;
     }
