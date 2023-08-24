@@ -30,9 +30,9 @@ public class Main
         try
         {
             //User Authentication
-            login.authentication(users);
+            int userId = login.authentication(users);
             //show rewards
-            rewardService.accessRewards(sharedQueue);
+            rewardService.accessRewards(sharedQueue, userId);
         }
         catch (AuthException e)
         {
@@ -41,9 +41,9 @@ public class Main
             try
             {
                 //User Authentication
-                login.authentication(users);
+                int userId =  login.authentication(users);
                 //show rewards
-                rewardService.accessRewards(sharedQueue);
+                rewardService.accessRewards(sharedQueue, userId);
             }
             catch (AuthException ex)
             {

@@ -4,22 +4,25 @@ import com.telusko.rewards.dto.Category;
 import com.telusko.rewards.dto.Rewards;
 import com.telusko.rewards.dto.User;
 
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+
+import static com.telusko.rewards.constants.Constants.*;
 
 public class Util
 {
     String[] rewardsCat = new String[]{"Electronics", "Fashion", "Furniture"};
 
-    String[] elcCategory = new String[]{"Headphones", "Camera", "Tablet"};
-    int[] elcPoints = new int[]{200, 500, 300};
+    String[] elcCategory = new String[]{"Phone", "Camera", "Tablet"};
+    int[] elcPoints = new int[]{500, 800, 900};
 
     String[] fashionCat = new String[]{"Sneakers", "Handbag", "Smartwatch"};
-    int[] fashionPoints = new int[]{200, 100, 300};
+    int[] fashionPoints = new int[]{800, 500, 1000};
 
-    String[] FurCat = new String[]{"OfficeChair", "studyTable", "Sofa"};
-    int[] FurPoints = new int[]{200, 300, 500};
+    String[] FurCat = new String[]{"OfficeChair", "studyTable", "Sofaset"};
+    int[] FurPoints = new int[]{500, 800, 1000};
 
     public String encryptPwd(String pwd)
     {
@@ -36,17 +39,16 @@ public class Util
     public List<Rewards> setRewards()
     {
         List<Rewards> rewardsList = new ArrayList<>();
-        List<Category> categories = new ArrayList<>();
 
-        for(int i=0; i<3; i++)
+        for(int i=0; i<rewardsCat.length; i++)
         {
             Rewards rewards = new Rewards();
             rewards.setId(i+1);
             rewards.setName(rewardsCat[i]);
 
-            for(int j=0; j<3; j++)
+            List<Category> categories = new ArrayList<>();
+            for(int j=0; j<rewardsCat.length; j++)
             {
-
                 if(rewards.getName().equalsIgnoreCase("Electronics"))
                 {
                     Category category = new Category();
@@ -63,7 +65,8 @@ public class Util
                     category.setPoints(fashionPoints[j]);
                     categories.add(category);
                 }
-                else{
+                else
+                {
                     Category category = new Category();
                     category.setId(j+1);
                     category.setName(FurCat[j]);
@@ -75,5 +78,60 @@ public class Util
             rewardsList.add(rewards);
         }
         return rewardsList;
+    }
+    
+    public User getUser(List<User> users, int id)
+    {
+        User user = null;
+        for (User user1 : users) 
+        {
+            if(user1.getId() == id)
+            {
+                user = user1;
+                break;
+            }
+        }
+        return user;
+    }
+
+    public String generateCouponCode()
+    {
+        SecureRandom random = new SecureRandom();
+        byte[] codeBytes = new byte[16];
+        random.nextBytes(codeBytes);
+        return Base64.getEncoder().encodeToString(codeBytes);
+    }
+    
+    public void msg1()
+    {
+        System.out.println(CYAN + "*****************************************");
+        System.out.println(BLUE + "Have a glance at Reward Categories below:" + RESET);
+    }
+
+    public void msg2()
+    {
+        System.out.println( "Enter which" + YELLOW + " Reward category" + RESET + ", you want to explore: ");
+    }
+
+    public void msg3(int points)
+    {
+        System.out.println("You can redeem any item by using point available: " + BLUE + points + RESET);
+    }
+
+    public void msg4(String name, String couponCode)
+    {
+        System.out.println(GREEN + "Successfully you have redeemed item: " + name);
+        System.out.println(PURPLE + "Gift card Coupon code: " + couponCode
+                + " Use code at www.teluskorewards.com website to purchase it.");
+    }
+
+    public void msg5(int points)
+    {
+        System.out.println(RED + "Redeem failed due to insufficient points.");
+        System.out.println("Current Points: " + points + RESET);
+    }
+
+    public void msg6(User user)
+    {
     }
 }

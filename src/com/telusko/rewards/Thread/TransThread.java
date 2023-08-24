@@ -26,6 +26,7 @@ public class TransThread implements Runnable
         {
             while(!Thread.currentThread().isInterrupted())
             {
+
                 int max = 20000;
                 int min = 10000;
 

@@ -2,6 +2,7 @@ package com.telusko.rewards.dto;
 
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
 
 public class User
 {
@@ -11,6 +12,7 @@ public class User
     private int transAmount;
     private int points;
     private int redeemPoints;
+    private List<GiftCard> giftCards;
 
 
     public int getId() {
@@ -59,6 +61,14 @@ public class User
 
     public void setRedeemPoints(int redeemPoints) {
         this.redeemPoints = redeemPoints;
+    }
+
+    public List<GiftCard> getGiftCards() {
+        return giftCards;
+    }
+
+    public void setGiftCards(List<GiftCard> giftCards) {
+        this.giftCards = giftCards;
     }
 
     @Override

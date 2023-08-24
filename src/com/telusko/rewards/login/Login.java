@@ -8,8 +8,7 @@ import com.telusko.rewards.util.Util;
 import java.util.List;
 import java.util.Scanner;
 
-import static com.telusko.rewards.constants.Constants.CYAN;
-import static com.telusko.rewards.constants.Constants.RESET;
+import static com.telusko.rewards.constants.Constants.*;
 
 public class Login
 {
@@ -23,7 +22,7 @@ public class Login
         System.out.println("**********************************" + RESET);
     }
 
-    public void authentication(List<User> users) throws AuthException
+    public int authentication(List<User> users) throws AuthException
     {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter your Name:");
@@ -34,13 +33,15 @@ public class Login
         String excMsg = "";
 
         //Validating user
+        int userId = 0;
         for (User user : users)
         {
             String decPwd = util.decryptPwd(user.getPassword());
 
             if (user.getName().equalsIgnoreCase(name) && decPwd.equals(pwd))
             {
-                System.out.println("Successfully logged in!!!");
+                System.out.println(GREEN + "Successfully logged in!!!" + RESET);
+                userId = user.getId();
                 excMsg = "";
                 break;
             }
@@ -53,5 +54,6 @@ public class Login
         {
             throw new AuthException(excMsg);
         }
+        return userId;
     }
 }
