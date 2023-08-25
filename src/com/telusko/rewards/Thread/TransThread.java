@@ -27,8 +27,8 @@ public class TransThread implements Runnable
             while(!Thread.currentThread().isInterrupted())
             {
 
-                int max = 20000;
-                int min = 10000;
+                int max = 100000;
+                int min = 50000;
 
                 Random rand = new Random();
                 User user = users.get(rand.nextInt(users.size()));
@@ -41,7 +41,7 @@ public class TransThread implements Runnable
 
                 userList.add(user);
                 sharedQueue.put(userList);
-                Thread.sleep(1000);
+                Thread.sleep(3000);
             }
         }
         catch (InterruptedException e)

@@ -4,9 +4,7 @@ import com.telusko.rewards.dto.User;
 import com.telusko.rewards.util.Util;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
-import java.util.Random;
 
 import static com.telusko.rewards.constants.Constants.PASSWORD;
 

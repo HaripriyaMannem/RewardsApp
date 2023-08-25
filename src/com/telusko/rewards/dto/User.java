@@ -1,7 +1,5 @@
 package com.telusko.rewards.dto;
 
-import java.util.Arrays;
-import java.util.Base64;
 import java.util.List;
 
 public class User
@@ -11,7 +9,6 @@ public class User
     private String password;
     private int transAmount;
     private int points;
-    private int redeemPoints;
     private List<GiftCard> giftCards;
 
 
@@ -55,13 +52,6 @@ public class User
         this.points = points;
     }
 
-    public int getRedeemPoints() {
-        return redeemPoints;
-    }
-
-    public void setRedeemPoints(int redeemPoints) {
-        this.redeemPoints = redeemPoints;
-    }
 
     public List<GiftCard> getGiftCards() {
         return giftCards;
@@ -79,7 +69,6 @@ public class User
                 ", password='" + password + '\'' +
                 ", transAmount=" + transAmount +
                 ", points=" + points +
-                ", redeemPoints=" + redeemPoints +
                 '}';
     }
 }

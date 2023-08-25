@@ -1,3 +1,5 @@
+package com.telusko.rewards.main;
+
 import com.telusko.rewards.Thread.TransThread;
 import com.telusko.rewards.dto.User;
 import com.telusko.rewards.exception.AuthException;
@@ -11,10 +13,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 import static com.telusko.rewards.constants.Constants.*;
 
-public class Main
+public class RewardApp
 {
     public static void main(String[] args)
     {
+
         //Creating and Fetching Users
         UserService userObj = new UserService();
         List<User> users = userObj.createUsers();
@@ -53,4 +56,5 @@ public class Main
             }
         }
     }
+
 }

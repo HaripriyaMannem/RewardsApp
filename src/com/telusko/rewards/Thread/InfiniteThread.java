@@ -1,6 +1,7 @@
 package com.telusko.rewards.Thread;
 import java.util.concurrent.*;
 
+//This class is just for reference not related to project
 public class InfiniteThread {
 
         public static void main(String[] args)

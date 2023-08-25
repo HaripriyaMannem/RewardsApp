@@ -3,9 +3,7 @@ package com.telusko.rewards.dto;
 public class Category
 {
     private int id;
-
     private String name;
-
     private int points;
 
     public int getId() {

@@ -5,9 +5,7 @@ import java.util.List;
 public class Rewards
 {
     private int id;
-
     private String name;
-
     List<Category> categoryList;
 
     public int getId() {

@@ -15,13 +15,13 @@ public class Util
 {
     String[] rewardsCat = new String[]{"Electronics", "Fashion", "Furniture"};
 
-    String[] elcCategory = new String[]{"Phone", "Camera", "Tablet"};
+    String[] elcCategory = new String[]{"Earbuds", "Camera ", "Tablet "};
     int[] elcPoints = new int[]{500, 800, 900};
 
     String[] fashionCat = new String[]{"Sneakers", "Handbag", "Smartwatch"};
     int[] fashionPoints = new int[]{800, 500, 1000};
 
-    String[] FurCat = new String[]{"OfficeChair", "studyTable", "Sofaset"};
+    String[] FurCat = new String[]{"StudyChair", "studyTable", "Sofaset"};
     int[] FurPoints = new int[]{500, 800, 1000};
 
     public String encryptPwd(String pwd)
@@ -79,6 +79,11 @@ public class Util
         }
         return rewardsList;
     }
+
+    public boolean validateId(int id)
+    {
+        return (id == 1 || id == 2 || id == 3);
+    }
     
     public User getUser(List<User> users, int id)
     {
@@ -104,34 +109,33 @@ public class Util
     
     public void msg1()
     {
-        System.out.println(CYAN + "*****************************************");
+        System.out.println(CYAN + "-----------------------------------------");
         System.out.println(BLUE + "Have a glance at Reward Categories below:" + RESET);
     }
 
     public void msg2()
     {
-        System.out.println( "Enter which" + YELLOW + " Reward category" + RESET + ", you want to explore: ");
+        System.out.println( "Enter which" + YELLOW + " Reward category" + RESET + ", " +
+                "you want to explore: ");
     }
 
     public void msg3(int points)
     {
-        System.out.println("You can redeem any item by using point available: " + BLUE + points + RESET);
+        System.out.println("You can " + YELLOW + "redeem" + RESET +
+                " any item by using points available: " + BLUE + points + RESET);
     }
 
     public void msg4(String name, String couponCode)
     {
         System.out.println(GREEN + "Successfully you have redeemed item: " + name);
-        System.out.println(PURPLE + "Gift card Coupon code: " + couponCode
-                + " Use code at www.teluskorewards.com website to purchase it.");
+        System.out.println(PURPLE + "Gift Card Coupon code: " + couponCode);
+        System.out.println(CYAN + "-------------------------------------------" + RESET);
     }
 
-    public void msg5(int points)
+    public void msg5()
     {
         System.out.println(RED + "Redeem failed due to insufficient points.");
-        System.out.println("Current Points: " + points + RESET);
+        System.out.println(CYAN + "----------------------------------------" +RESET);
     }
 
-    public void msg6(User user)
-    {
-    }
 }
