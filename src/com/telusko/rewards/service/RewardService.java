@@ -164,7 +164,15 @@ public class RewardService {
             System.out.println(CYAN + "*************************************" +
                     "*********************************" + RESET);
             System.out.println(BLUE + "Summary of all redeemed Rewards:" + RESET);
-            displayGiftCards(user);
+            if(user.getGiftCards() != null && user.getGiftCards().size() >=1)
+            {
+                displayGiftCards(user);
+            }
+            else{
+                System.out.println(YELLOW + "Sorry!! No Gift Cards Redeemed." + RESET);
+                System.out.println(CYAN + "*************************************" +
+                        "*********************************" + RESET);
+            }
         }
     }
 
