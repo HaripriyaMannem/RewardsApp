@@ -6,6 +6,7 @@ import com.telusko.rewards.exception.AuthException;
 import com.telusko.rewards.login.Login;
 import com.telusko.rewards.service.RewardService;
 import com.telusko.rewards.service.UserService;
+import com.telusko.rewards.util.Util;
 
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
@@ -17,10 +18,9 @@ public class RewardApp
 {
     public static void main(String[] args)
     {
-
         //Creating and Fetching Users
         UserService userObj = new UserService();
-        List<User> users = userObj.createUsers();
+        List<User> users = userObj.fetchUsers();
 
         //Background Thread for Transactions
         BlockingQueue<List<User>> sharedQueue = new LinkedBlockingQueue<>();
@@ -56,5 +56,4 @@ public class RewardApp
             }
         }
     }
-
 }

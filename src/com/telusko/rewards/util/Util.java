@@ -3,6 +3,7 @@ package com.telusko.rewards.util;
 import com.telusko.rewards.dto.Category;
 import com.telusko.rewards.dto.Rewards;
 import com.telusko.rewards.dto.User;
+import com.telusko.rewards.repository.RewardsRepo;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -16,13 +17,13 @@ public class Util
     String[] rewardsCat = new String[]{"Electronics", "Fashion", "Furniture"};
 
     String[] elcCategory = new String[]{"Earbuds", "Camera ", "Tablet "};
-    int[] elcPoints = new int[]{500, 800, 900};
+    int[] elcPoints = new int[]{2000, 5000, 4000};
 
     String[] fashionCat = new String[]{"Sneakers", "Handbag", "Smartwatch"};
-    int[] fashionPoints = new int[]{800, 500, 1000};
+    int[] fashionPoints = new int[]{2000, 1000, 3000};
 
     String[] FurCat = new String[]{"StudyChair", "studyTable", "Sofaset"};
-    int[] FurPoints = new int[]{500, 800, 1000};
+    int[] FurPoints = new int[]{3000, 4000, 5000};
 
     public String encryptPwd(String pwd)
     {
@@ -38,6 +39,8 @@ public class Util
 
     public List<Rewards> setRewards()
     {
+        RewardsRepo rewardsRepo = new RewardsRepo();
+
         List<Rewards> rewardsList = new ArrayList<>();
 
         for(int i=0; i<rewardsCat.length; i++)
@@ -45,7 +48,7 @@ public class Util
             Rewards rewards = new Rewards();
             rewards.setId(i+1);
             rewards.setName(rewardsCat[i]);
-
+            rewardsRepo.insertRewards(rewards);
             List<Category> categories = new ArrayList<>();
             for(int j=0; j<rewardsCat.length; j++)
             {
@@ -55,6 +58,7 @@ public class Util
                     category.setId(j+1);
                     category.setName(elcCategory[j]);
                     category.setPoints(elcPoints[j]);
+                    rewardsRepo.insertCategories(category, rewards);
                     categories.add(category);
                 }
                 else if(rewards.getName().equalsIgnoreCase("Fashion"))
@@ -63,6 +67,7 @@ public class Util
                     category.setId(j+1);
                     category.setName(fashionCat[j]);
                     category.setPoints(fashionPoints[j]);
+                    rewardsRepo.insertCategories(category, rewards);
                     categories.add(category);
                 }
                 else
@@ -71,6 +76,7 @@ public class Util
                     category.setId(j+1);
                     category.setName(FurCat[j]);
                     category.setPoints(FurPoints[j]);
+                    rewardsRepo.insertCategories(category, rewards);
                     categories.add(category);
                 }
                 rewards.setCategoryList(List.copyOf(categories));

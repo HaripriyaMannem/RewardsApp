@@ -1,0 +1,28 @@
+CREATE TABLE users (
+    userId INT PRIMARY KEY,
+    userName VARCHAR(255),
+	userPwd VARCHAR(255),
+    transAmount INT,
+    redeemPoints INT
+);
+
+CREATE TABLE giftcard (
+	userId INT,
+    name VARCHAR(255),
+    points INT,
+    couponCode VARCHAR(255),
+    FOREIGN KEY (userId) REFERENCES users(userId)
+);
+
+CREATE TABLE rewards (
+    rid INT PRIMARY KEY,
+    name VARCHAR(255)
+);
+
+CREATE TABLE category (
+	cid INT,
+    name VARCHAR(255),
+    points INT,
+    rid INT,
+    FOREIGN KEY (rid) REFERENCES rewards(rid)
+);

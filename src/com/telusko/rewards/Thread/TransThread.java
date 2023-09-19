@@ -1,6 +1,7 @@
 package com.telusko.rewards.Thread;
 
 import com.telusko.rewards.dto.User;
+import com.telusko.rewards.repository.UserRepo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +22,7 @@ public class TransThread implements Runnable
     @Override
     public void run()
     {
+        UserRepo userRepo = new UserRepo();
         List<User> userList = new ArrayList<>();
         try
         {
@@ -39,8 +41,11 @@ public class TransThread implements Runnable
                 int points = randomAmt/100;
                 user.setPoints(user.getPoints() + points);
 
-                userList.add(user);
-                sharedQueue.put(userList);
+                if(!userRepo.updateUser(user)){
+                    userList.add(user);
+                    sharedQueue.put(userList);
+                }
+
                 Thread.sleep(3000);
             }
         }
