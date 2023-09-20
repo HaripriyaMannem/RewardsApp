@@ -5,6 +5,7 @@ import com.telusko.rewards.dto.GiftCard;
 import com.telusko.rewards.dto.Rewards;
 import com.telusko.rewards.dto.User;
 import com.telusko.rewards.main.RewardApp;
+import com.telusko.rewards.repository.RewardsRepo;
 import com.telusko.rewards.util.Util;
 
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class RewardService {
 
     Util util = new Util();
     List<GiftCard> giftCards = new ArrayList<>();
+    RewardsRepo rewardsRepo = new RewardsRepo();
     public void accessRewards(BlockingQueue<List<User>> sharedQueue, int userId)
     {
         boolean flag = true;
@@ -27,11 +29,10 @@ public class RewardService {
             List<User> users;
             try
             {
-                //Prepare all Rewards
-                List<Rewards> rewards = util.setRewards();
+                //fetch all Rewards
+                List<Rewards> rewards = rewardsRepo.fetchRewards();
                 //fetch users from Background Transactions Thread
                 users = sharedQueue.take();
-
                 //Show Rewards to the user
                 List<User> uniqueUsers = users.stream().distinct().collect(Collectors.toList());
                 displayRewards(rewards, uniqueUsers, userId);
@@ -107,7 +108,7 @@ public class RewardService {
 
     private void displayCat(User user, List<Rewards> rewards, int id)
     {
-        List<Category> categories = rewards.get(id - 1).getCategoryList();
+        List<Category> categories = rewardsRepo.getCategories(id);
         System.out.println("Number \tCategory \tPoints");
 
         for (Category category : categories)
@@ -132,8 +133,13 @@ public class RewardService {
                 giftCard.setName(category.getName());
                 giftCard.setPoints(category.getPoints());
 
-                util.msg4(category.getName(), giftCard.getCouponCode());
-                user.setPoints(user.getPoints() - category.getPoints());
+                int insertCount = rewardsRepo.saveGiftCards(giftCard, user.getId());
+                if(insertCount > 0)
+                {
+                    util.msg4(category.getName(), giftCard.getCouponCode());
+                    user.setPoints(user.getPoints() - category.getPoints());
+                    rewardsRepo.updateUserPoints(user);
+                }
 
                 giftCards.add(giftCard);
                 user.setGiftCards(giftCards);
@@ -178,7 +184,7 @@ public class RewardService {
 
     private void displayGiftCards(User user)
     {
-        List<GiftCard> giftCards1 = user.getGiftCards();
+        List<GiftCard> giftCards1 = rewardsRepo.getGiftCards(user);
         int i = 0;
 
         for(GiftCard giftCard1 : giftCards1)
