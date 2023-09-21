@@ -149,10 +149,10 @@ public class RewardsRepo {
             if(connect!=null)
             {
 
-                String query="SELECT cid, name, points from category where rid=?";
+                String query="select cid, name, points from category where rid=?";
                 pstmnt=connect.prepareStatement(query);
                 pstmnt.setInt(1, id);
-                ResultSet result = pstmnt.executeQuery(query);
+                ResultSet result = pstmnt.executeQuery();
 
                 while (result.next())
                 {
@@ -228,7 +228,6 @@ public class RewardsRepo {
             {
                 String sql="UPDATE users set redeemPoints=? where userId=?";
                 pstmnt=connect.prepareStatement(sql);
-
                 pstmnt.setInt(1, user.getPoints());
                 pstmnt.setInt(2, user.getId());
                 pstmnt.executeUpdate();
@@ -260,10 +259,10 @@ public class RewardsRepo {
 
             if(connect!=null)
             {
-                String query="SELECT name, points, couponCode from giftcard where userId=?";
+                String query="select name, points, couponCode from giftcard where userId=?";
                 pstmnt=connect.prepareStatement(query);
                 pstmnt.setInt(1, user.getId());
-                ResultSet result = pstmnt.executeQuery(query);
+                ResultSet result = pstmnt.executeQuery();
 
                 while (result.next())
                 {
