@@ -6,13 +6,13 @@ import com.telusko.rewards.dto.Rewards;
 import com.telusko.rewards.dto.User;
 import com.telusko.rewards.main.RewardApp;
 import com.telusko.rewards.repository.RewardsRepo;
+import com.telusko.rewards.repository.UserRepo;
 import com.telusko.rewards.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.BlockingQueue;
-import java.util.stream.Collectors;
 
 import static com.telusko.rewards.constants.Constants.*;
 
@@ -21,6 +21,7 @@ public class RewardService {
     Util util = new Util();
     List<GiftCard> giftCards = new ArrayList<>();
     RewardsRepo rewardsRepo = new RewardsRepo();
+    UserRepo userRepo = new UserRepo();
     public void accessRewards(BlockingQueue<List<User>> sharedQueue, int userId)
     {
         boolean flag = true;
@@ -31,15 +32,17 @@ public class RewardService {
             {
                 //fetch all Rewards
                 List<Rewards> rewards = rewardsRepo.fetchRewards();
+
                 //fetch users from Background Transactions Thread
-                users = sharedQueue.take();
+                //users = sharedQueue.take();
+
                 //Show Rewards to the user
-                List<User> uniqueUsers = users.stream().distinct().collect(Collectors.toList());
-                displayRewards(rewards, uniqueUsers, userId);
+                users = userRepo.fetchUsers();
+                displayRewards(rewards, users, userId);
 
                 flag= false;
             }
-            catch (InterruptedException e)
+            catch (Exception e)
             {
                System.out.println(e.getMessage());
                break;
@@ -69,12 +72,12 @@ public class RewardService {
                     //Show Rewards Categories
                     try
                     {
-                        displayCat(user, rewards, id);
+                        displayCat(user, id);
                     }
                     catch(Exception e)
                     {
                         System.out.println(RED + e.getMessage() + RESET);
-                        displayCat(user, rewards, id);
+                        displayCat(user, id);
                     }
 
                     redeemItems(rewards, users, user, userId);
@@ -106,7 +109,7 @@ public class RewardService {
 
     }
 
-    private void displayCat(User user, List<Rewards> rewards, int id)
+    private void displayCat(User user, int id)
     {
         List<Category> categories = rewardsRepo.getCategories(id);
         System.out.println("Number \tCategory \tPoints");

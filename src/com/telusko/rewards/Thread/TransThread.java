@@ -23,7 +23,6 @@ public class TransThread implements Runnable
     public void run()
     {
         UserRepo userRepo = new UserRepo();
-        List<User> userList = new ArrayList<>();
         try
         {
             while(!Thread.currentThread().isInterrupted())
@@ -42,11 +41,10 @@ public class TransThread implements Runnable
                 user.setPoints(user.getPoints() + points);
 
                 if(!userRepo.updateUser(user)){
-                    userList.add(user);
-                    sharedQueue.put(userList);
+                    /*userList.add(user);
+                    sharedQueue.put(userList);*/
+                    Thread.sleep(3000);
                 }
-
-                Thread.sleep(3000);
             }
         }
         catch (InterruptedException e)
